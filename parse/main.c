@@ -4,12 +4,27 @@
  */
 
 #include "header.h"
+#include <unistd.h>
 
 int main(int argc, const char *argv[]) {
     char *line;
+    char prompt[1024];  // Buffer do prompt
+    char cwd[512];      // Buffer do cwd
+    char hostname[256]; // Buffer for user
     
     while (1) {
-        line = readline("msh$ ");
+        // Promp bonito
+        char *user = getenv("USER");
+        if (user == NULL) user = "user";
+
+        if (getcwd(cwd, sizeof(cwd)) == NULL) strcpy(cwd, "?");
+        if (gethostname(hostname, sizeof(hostname)) != 0) strcpy(hostname, "?");
+
+        snprintf(prompt, sizeof(prompt), "%s@%s:%s$ ", user, hostname, cwd);
+        // --------------------------------------------------
+
+        //Troca o msh$ pelo promp
+        line = readline(prompt);
         
         // Trata o sinal EOF (Ctrl+D)
         if (line == NULL) {
@@ -29,7 +44,7 @@ int main(int argc, const char *argv[]) {
         }
         
         parse_line(line);
-        print_command_list();
+        execute_commands();
         free_command_list();
         
         free(line); // Liberta a memória alocada por readline

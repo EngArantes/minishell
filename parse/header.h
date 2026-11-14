@@ -6,6 +6,9 @@
  *
  */
 
+#define _POSIX_C_SOURCE 200809L
+#define _DEFAULT_SOURCE
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -30,3 +33,4 @@ CMD *insert_command();
 void free_command_list();
 void print_command_list();
 void parse_line(char *);
+void execute_commands(void);
