@@ -102,6 +102,5 @@ int main(void) {
         free_command_list();
         free(line);
     }
-
     return 0;
 }
