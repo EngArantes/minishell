@@ -21,6 +21,7 @@ typedef struct command {
     char *infile;
     char *outfile;
     char *errfile;
+    int append_out; //FLAG (0 para '>', 1 para '>>')
     struct command *next;
 } CMD;
 
